@@ -1,0 +1,73 @@
+$cellWidth: 80px;
+
+body {
+  margin: 100px;
+  padding: 0;
+}
+
+.field {
+  display: inline-block;
+  position: relative;
+
+  .cell {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: $cellWidth;
+    height: $cellWidth;
+    border: 1px solid #343d46;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 30px;
+    line-height: $cellWidth;
+    transition: 3s transform ease;
+
+    &.v0 {
+      opacity: 0.2;
+    }
+
+    &.v2 {
+      background-color: #f0fe62;
+    }
+
+    &.v4 {
+      background-color: #49ffbb;
+    }
+
+    &.v8 {
+      background-color: #21f5ff;
+    }
+
+    &.v16 {
+      background-color: #f595ff;
+    }
+
+    &.v32 {
+      background-color: #ff6b77;
+    }
+
+    &.v64 {
+      background-color: #ff293a;
+    }
+
+    &.v128 {
+      background-color: #fffe5e;
+    }
+
+    &.v256 {
+      background-color: #c7ff34;
+    }
+
+    &.v512 {
+      background-color: #8741ff;
+    }
+
+    &.v1024 {
+      background-color: #212fff;
+    }
+
+    &.v2048 {
+      background-color: #25ff9c;
+    }
+  }
+}

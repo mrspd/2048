@@ -2,17 +2,21 @@ import Field from 'models/field';
 import FieldComponent from 'views/field';
 import {render} from 'react-dom';
 import React from 'react';
-
-let sOptions = Symbol('options'),
-    sField = Symbol('field');
+import Hammer from 'hammerjs';
 
 class App {
-    constructor(node, options) {
-        this[sOptions] = options;
-        this[sField] = new Field(this[sOptions].size);
+    keyboardEnabled = true;
+
+    constructor(node, options = {size: 4}) {
+        this.field = new Field({size: options.size});
 
         document.addEventListener('keydown', this.keyboardHandler.bind(this));
-        this.render(node, {field: this[sField]});
+
+        let hammer = new Hammer(document.body);
+        hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+        hammer.on('swipeleft swiperight swipeup swipedown', this.swipeHandler.bind(this));
+
+        this.render(node, {field: this.field});
     }
 
     keyboardHandler(e) {
@@ -24,14 +28,26 @@ class App {
         };
 
         let direction = keyboardArrowMap[e.keyCode];
-        if(direction) this[sField].move(direction);
+        if(direction && this.keyboardEnabled) this.field.move(direction);
+    }
+
+    swipeHandler(e) {
+        if(this.keyboardEnabled) this.field.move(e.type.replace('swipe', ''));
+    }
+
+    enableKeyboard() {
+        this.keyboardEnabled = true;
+    }
+
+    disableKeyboard() {
+        this.keyboardEnabled = false;
     }
 
     render(node, props) {
-        render((<FieldComponent {...props}/>), node);
+        render((<FieldComponent {...props} enableKeyboard={this.enableKeyboard.bind(this)} disableKeyboard={this.disableKeyboard.bind(this)}/>), node);
     }
 
-    static init(node, options = {size: 4}) {
+    static init(node, options) {
         new App(node, options);
     }
 }

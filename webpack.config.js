@@ -2,17 +2,13 @@ var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ENV = process.env.NODE_ENV || 'dev';
 
 var entries = [
     "./index",
     "./assets/main.scss"
 ];
-
-if(ENV == 'dev') {
-    //entries.push("webpack-dev-server/client?http://localhost:8082/");
-    //entries.push("webpack/hot/dev-server");
-};
 
 module.exports = {
     context: __dirname + "/src",
@@ -22,7 +18,7 @@ module.exports = {
         filename: "bundle.js",
         publicPath: ""
     },
-    devtool: 'source-map',
+    devtool: ENV == 'dev' ? 'source-map' : null,
     resolve: {
         modules: [path.resolve(__dirname + '/src'), 'src', 'node_modules'],
         extensions: ['.js', '.jsx']
@@ -56,9 +52,13 @@ module.exports = {
             },
             env: ENV
         }),
+        new CopyWebpackPlugin([{
+            from: 'assets/swipe.mp3',
+            to: ''
+        }]),
         new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
         new webpack.HotModuleReplacementPlugin(),
-        //new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
     ],
     devServer: {

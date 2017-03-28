@@ -1,13 +1,67 @@
 $cellWidth: 80px;
+$cellMargin: 20px;
+
+html {
+  height: 100%;
+  position: relative;
+}
 
 body {
-  margin: 100px;
+  margin: 0;
   padding: 0;
+  background-color: #846c7b;
+  height: 100%;
 }
 
 .field {
   display: inline-block;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  margin-top: 100px;
+  margin-left: -200px;
+  width: 400 - $cellMargin;
+  height: 400 - $cellMargin;
+
+  .gameover {
+    position: absolute;
+    opacity: 1;
+    z-index: 200;
+    font-size: 45px;
+    bottom: -80px;
+    transform-origin: 50% 50%;
+    width: 400  - $cellMargin;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+
+  .scores {
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 21px;
+  }
+
+  .cell-background {
+    position: absolute;
+    width: $cellWidth + $cellMargin;
+    height: $cellWidth + $cellMargin;
+    margin: -$cellMargin / 2;
+    background-color: #846c7b;
+
+    &:after {
+      position: absolute;
+      width: $cellWidth;
+      height: $cellWidth;
+      left: $cellMargin / 2;
+      top: $cellMargin / 2;
+      background-color: #6b5462;
+      content: "";
+      border-radius: 10px;
+    }
+  }
 
   .cell {
     position: absolute;
@@ -15,59 +69,78 @@ body {
     top: 0;
     width: $cellWidth;
     height: $cellWidth;
-    border: 1px solid #343d46;
-    vertical-align: middle;
+    border-radius: 10px;
     text-align: center;
     font-size: 30px;
     line-height: $cellWidth;
-    transition: 3s transform ease;
+    transition: .1s transform linear;
+    box-sizing: border-box;
 
     &.v0 {
-      opacity: 0.2;
+      border-width: 0;
+      transition: none;
     }
 
     &.v2 {
       background-color: #f0fe62;
+      z-index: 100;
     }
 
     &.v4 {
       background-color: #49ffbb;
+      z-index: 101;
     }
 
     &.v8 {
       background-color: #21f5ff;
+      z-index: 102;
     }
 
     &.v16 {
       background-color: #f595ff;
+      z-index: 103;
     }
 
     &.v32 {
       background-color: #ff6b77;
+      z-index: 104;
     }
 
     &.v64 {
       background-color: #ff293a;
+      z-index: 105;
     }
 
     &.v128 {
       background-color: #fffe5e;
+      z-index: 106;
     }
 
     &.v256 {
       background-color: #c7ff34;
+      z-index: 107;
     }
 
     &.v512 {
       background-color: #8741ff;
+      z-index: 108;
     }
 
     &.v1024 {
       background-color: #212fff;
+      z-index: 109;
     }
 
     &.v2048 {
       background-color: #25ff9c;
+      z-index: 110;
+    }
+
+    &.raise {
+      transform-origin: 50% 50%;
+      transform: scale(0);
+      transition: none;
+      opacity: 0;
     }
   }
 }

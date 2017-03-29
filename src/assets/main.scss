@@ -56,7 +56,6 @@ body {
       top: $cellMargin / 2;
       background-color: #6b5462;
       content: "";
-      border-radius: 10px;
     }
   }
 
@@ -66,7 +65,6 @@ body {
     top: 0;
     width: $cellWidth;
     height: $cellWidth;
-    border-radius: 10px;
     text-align: center;
     font-size: 30px;
     line-height: $cellWidth;
@@ -79,57 +77,73 @@ body {
     }
 
     &.v2 {
-      background-color: #f0fe62;
+      background: #eee4da;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
       z-index: 100;
     }
 
     &.v4 {
-      background-color: #49ffbb;
+      background: #ede0c8;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
       z-index: 101;
     }
 
     &.v8 {
-      background-color: #21f5ff;
+      color: #f9f6f2;
+      background: #f2b179;
       z-index: 102;
     }
 
     &.v16 {
-      background-color: #f595ff;
+      color: #f9f6f2;
+      background: #f59563;
       z-index: 103;
     }
 
     &.v32 {
-      background-color: #ff6b77;
+      color: #f9f6f2;
+      background: #f67c5f;
       z-index: 104;
     }
 
     &.v64 {
-      background-color: #ff293a;
+      color: #f9f6f2;
+      background: #f65e3b;
       z-index: 105;
     }
 
     &.v128 {
-      background-color: #fffe5e;
+      color: #f9f6f2;
+      background: #edcf72;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
       z-index: 106;
     }
 
     &.v256 {
-      background-color: #c7ff34;
+      color: #f9f6f2;
+      background: #edcc61;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
       z-index: 107;
     }
 
     &.v512 {
-      background-color: #8741ff;
+      color: #f9f6f2;
+      background: #edc850;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
       z-index: 108;
     }
 
     &.v1024 {
-      background-color: #212fff;
+      color: #f9f6f2;
+      background: #edc53f;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
       z-index: 109;
     }
 
     &.v2048 {
-      background-color: #25ff9c;
+      color: #f9f6f2;
+      background: #edc22e;
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
       z-index: 110;
     }
 

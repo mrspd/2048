@@ -8,6 +8,7 @@ export default class Field extends Model {
     scores = 0;
     sound = new Audio('swipe.mp3');
     gameover = false;
+    win = false;
 
     constructor(options) {
         super();
@@ -37,6 +38,7 @@ export default class Field extends Model {
     reload() {
         this.scores = 0;
         this.gameover = false;
+        this.win = false;
 
         this.matrix.forEach((cells) => {
             cells.forEach((cell) => {
@@ -52,6 +54,8 @@ export default class Field extends Model {
     }
 
     move(direction) {
+        if(this.win || this.gameover) return false;
+
         this.normalize(direction);
 
         let merged = [];
@@ -64,6 +68,8 @@ export default class Field extends Model {
                     cells[c].value = cells[c].value * 2;
                     cells[c].isMerged = true;
                     cells[n].value = 0;
+
+                    if(cells[c].value == 2048) this.win = true;
 
                     merged.push([cells[c], cells[n]]);
                     cells = Field.normalizeRow(cells);
@@ -102,8 +108,9 @@ export default class Field extends Model {
 
         Event.emit('field.move', this);
 
-        if(!this.possibleVariantsExist() && this.emptyCellsCount == 0) {
+        if(!this.possibleVariantsExist() && this.emptyCellsCount == 0 && !this.win) {
             this.gameover = true;
+            Event.emit('field.move', this);
         }
     }
 

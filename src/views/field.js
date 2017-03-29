@@ -9,7 +9,8 @@ export default class FieldComponent extends React.Component {
         this.state = {
             field: this.props.field,
             scores: this.props.field.scores,
-            gameover: this.props.field.gameover
+            gameover: this.props.field.gameover,
+            win: this.props.field.win
         };
     }
 
@@ -26,7 +27,7 @@ export default class FieldComponent extends React.Component {
             });
         });
 
-        this.setState({scores: field.scores, gameover: field.gameover});
+        this.setState({scores: field.scores, gameover: field.gameover, win: field.win});
     }
 
     animation(field) {
@@ -38,6 +39,10 @@ export default class FieldComponent extends React.Component {
         if(field.gameover) {
             this.setState({gameover: true});
             return;
+        }
+
+        if(field.win) {
+            this.setState({win: true});
         }
 
         field.matrix.forEach((row, rowIdx) => {
@@ -118,6 +123,7 @@ export default class FieldComponent extends React.Component {
         return (
             <div className="field" style={this.style}>
                 {this.state.gameover ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>вы проиграли</div> : null}
+                {this.state.win ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>вы победили</div> : null}
                 <div className="scores" style={{width: this.width}}>{this.props.field.scores}</div>
                 {this.cells}
             </div>

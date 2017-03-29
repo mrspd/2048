@@ -8,7 +8,7 @@ import Event from 'event-dispatcher';
 class App {
     keyboardEnabled = true;
 
-    constructor(node, options = {size: 2}) {
+    constructor(node, options = {size: 4}) {
         this.field = new Field({size: options.size});
 
         document.addEventListener('keydown', this.keyboardHandler.bind(this));

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "webpack-dev-server --open"
+    "run": "npm install && webpack-dev-server --open"
   },
   "author": "mrspd",
   "license": "ISC",

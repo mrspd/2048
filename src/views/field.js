@@ -1,5 +1,7 @@
 import React from 'react';
 import CellComponent from './cell';
+import {CELL_SIZE, CELL_MARGIN} from 'consts';
+import Event from 'event-dispatcher';
 
 export default class FieldComponent extends React.Component {
     constructor(props) {
@@ -12,14 +14,26 @@ export default class FieldComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.field.handler = this.handler.bind(this);
+        Event.on('field.move', this.animation.bind(this));
+        Event.on('field.reload', this.reload.bind(this));
     }
 
-    handler(field) {
+    reload(field) {
+        field.matrix.forEach((row, rowIdx) => {
+            row.forEach((cell, cellIdx) => {
+                let cellComponent = this.getCellByKey(cell.key);
+                cellComponent.raise(cell.value)
+            });
+        });
+
+        this.setState({scores: field.scores, gameover: field.gameover});
+    }
+
+    animation(field) {
         let raiseAction = null,
             promises = [];
 
-        this.props.disableKeyboard();
+        Event.emit('field.animation.begin');
 
         if(field.gameover) {
             this.setState({gameover: true});
@@ -53,10 +67,10 @@ export default class FieldComponent extends React.Component {
         Promise.all(promises).then(() => {
             if(raiseAction) {
                 raiseAction().then(() => {
-                    this.props.enableKeyboard();
+                    Event.emit('field.animation.end');
                 });
             } else {
-                this.props.enableKeyboard();
+                Event.emit('field.animation.end');
             }
 
             this.setState({
@@ -88,11 +102,23 @@ export default class FieldComponent extends React.Component {
     }
 
 
+    get style() {
+        return {width: this.width, height: this.width};
+    }
+
+    get width() {
+        return CELL_SIZE * this.props.field.size - CELL_MARGIN;
+    }
+
+    restart() {
+        Event.emit('field.restart');
+    }
+
     render() {
         return (
-            <div className="field">
-                {this.state.gameover ? <div className="gameover">вы проиграли</div> : null}
-                <div className="scores">{this.props.field.scores}</div>
+            <div className="field" style={this.style}>
+                {this.state.gameover ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>вы проиграли</div> : null}
+                <div className="scores" style={{width: this.width}}>{this.props.field.scores}</div>
                 {this.cells}
             </div>
         );

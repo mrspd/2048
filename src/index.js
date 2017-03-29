@@ -3,6 +3,7 @@ import FieldComponent from 'views/field';
 import {render} from 'react-dom';
 import React from 'react';
 import Hammer from 'hammerjs';
+import Event from 'event-dispatcher';
 
 class App {
     keyboardEnabled = true;
@@ -15,6 +16,9 @@ class App {
         let hammer = new Hammer(document.body);
         hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
         hammer.on('swipeleft swiperight swipeup swipedown', this.swipeHandler.bind(this));
+
+        Event.on('field.animation.begin', this.enableKeyboard);
+        Event.on('field.animation.end', this.disableKeyboard);
 
         this.render(node, {field: this.field});
     }
@@ -44,7 +48,7 @@ class App {
     }
 
     render(node, props) {
-        render((<FieldComponent {...props} enableKeyboard={this.enableKeyboard.bind(this)} disableKeyboard={this.disableKeyboard.bind(this)}/>), node);
+        render((<FieldComponent size={this.field.size} {...props} enableKeyboard={this.enableKeyboard.bind(this)} disableKeyboard={this.disableKeyboard.bind(this)}/>), node);
     }
 
     static init(node, options) {

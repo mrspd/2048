@@ -1,10 +1,10 @@
 import Model from 'components/model';
 import Cell from 'models/cell';
+import Event from 'event-dispatcher';
 
 export default class Field extends Model {
     size;
     matrix = [];
-    handler = null;
     scores = 0;
     sound = new Audio('swipe.mp3');
     gameover = false;
@@ -12,6 +12,8 @@ export default class Field extends Model {
     constructor(options) {
         super();
         this.size = options.size;
+
+        this.matrix = [];
 
         // Заполняем поле ячейками
         for(let y = 0; y < this.size; ++y) {
@@ -28,6 +30,25 @@ export default class Field extends Model {
         let initialCell = this.randomCell;
         initialCell.isNew = true;
         initialCell.value = 2;
+
+        Event.on('field.restart', this.reload.bind(this));
+    }
+
+    reload() {
+        this.scores = 0;
+        this.gameover = false;
+
+        this.matrix.forEach((cells) => {
+            cells.forEach((cell) => {
+                cell.value = 0;
+            });
+        });
+
+        let initialCell = this.randomCell;
+        initialCell.isNew = true;
+        initialCell.value = 2;
+
+        Event.emit('field.reload', this);
     }
 
     move(direction) {
@@ -55,7 +76,12 @@ export default class Field extends Model {
         this.denormalize(direction);
 
         if(this.setCellPositions()) {
-            this.sound.play();
+            this.sound.pause();
+            this.sound.currentTime = 0;
+            setTimeout(() => {
+                this.sound.play();
+            }, 150);
+
 
             if(this.emptyCellsCount > 0) {
                 while(true) {
@@ -74,11 +100,10 @@ export default class Field extends Model {
             }
         }
 
-        if(this.handler) this.handler(this);
+        Event.emit('field.move', this);
 
         if(!this.possibleVariantsExist() && this.emptyCellsCount == 0) {
             this.gameover = true;
-            this.handler(this);
         }
     }
 

@@ -58,9 +58,8 @@ module.exports = {
         }]),
         new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.AggressiveMergingPlugin(),
-    ],
+        new webpack.optimize.AggressiveMergingPlugin()
+    ].concat(ENV == 'dev' ? [] : [new webpack.optimize.UglifyJsPlugin()]),
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         hot: true,

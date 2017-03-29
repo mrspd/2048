@@ -11,25 +11,22 @@ body {
   padding: 0;
   background-color: #846c7b;
   height: 100%;
+  text-align: center;
 }
 
 .field {
   display: inline-block;
-  position: absolute;
-  left: 50%;
   margin-top: 100px;
-  margin-left: -200px;
-  width: 400 - $cellMargin;
-  height: 400 - $cellMargin;
+  position: relative;
 
   .gameover {
     position: absolute;
     opacity: 1;
     z-index: 200;
-    font-size: 45px;
-    bottom: -80px;
+    font-size: 25px;
+    padding: 5px 0;
+    bottom: -60px;
     transform-origin: 50% 50%;
-    width: 400  - $cellMargin;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.3);
     color: #fff;

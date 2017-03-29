@@ -1,4 +1,5 @@
 import React from 'react';
+import {CELL_SIZE} from 'consts';
 
 export default class CellComponent extends React.Component {
     constructor(props) {
@@ -20,8 +21,8 @@ export default class CellComponent extends React.Component {
     }
 
     get style() {
-        let translateY = this.state.position[0] * 100,
-            translateX = this.state.position[1] * 100;
+        let translateY = this.state.position[0] * CELL_SIZE,
+            translateX = this.state.position[1] * CELL_SIZE;
 
         let transforms = [`translate(${translateX}px, ${translateY}px)`];
 
@@ -37,8 +38,8 @@ export default class CellComponent extends React.Component {
     }
 
     get backgroundStyle() {
-        let translateY = this.props.rowIdx * 100,
-            translateX = this.props.cellIdx * 100;
+        let translateY = this.props.rowIdx * CELL_SIZE,
+            translateX = this.props.cellIdx * CELL_SIZE;
 
         return {transform: [`translate(${translateX}px, ${translateY}px)`]};
     }

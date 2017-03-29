@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "run": "webpack-dev-server --open"
+  },
   "author": "mrspd",
   "license": "ISC",
   "dependencies": {},

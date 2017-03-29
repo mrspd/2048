@@ -122,7 +122,7 @@ export default class FieldComponent extends React.Component {
     render() {
         return (
             <div className="field" style={this.style}>
-                {this.state.gameover ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>вы проиграли</div> : null}
+                {this.state.gameover ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>переиграть</div> : null}
                 {this.state.win ? <div className="gameover" style={{width: this.width}} onClick={this.restart.bind(this)}>вы победили</div> : null}
                 <div className="scores" style={{width: this.width}}>{this.props.field.scores}</div>
                 {this.cells}
